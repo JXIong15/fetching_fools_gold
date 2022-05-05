@@ -8,28 +8,29 @@ driver.get("http://sdetchallenge.fetchrewards.com/")
 def main():
     assert "React" in driver.title
     goldBars = driver.find_elements(By.XPATH, "//div[@class='coins']/button")
+    resetBtn = driver.find_element(By.XPATH, "//button[contains(text(),'Reset')]")
     ans = None
 
-    if len(goldBars) % 2 != 0:
-        extra = goldBars[len(goldBars)-1]
-        # print(extra.text)
-        goldBars.pop()
+    while ans == None:
+        if len(goldBars) % 2 != 0:
+            extra = goldBars[len(goldBars)-1]
+            goldBars.pop()
 
-    halfway = int(len(goldBars) / 2)
-    print(halfway)
+        pile1 = []
+        pile2 = []
+        halfway = int(len(goldBars) / 2)
+        resetBtn.click()    # make sure board is empty
 
-    pile1 = []
-    pile2 = []
-
-    for i in range(0, len(goldBars)):
-        if i < halfway:
-            pile1.append(goldBars[i])
-        else:
-            pile2.append(goldBars[i])
+        for i in range(0, len(goldBars)):
+            if i < halfway:
+                pile1.append(goldBars[i])
+            else:
+                pile2.append(goldBars[i])
 
         # weigh pile1 and pile2
         # if piles are equal: set ans = extra and return
-        # else: take lighter pile and repeat for loop
+        # else: take lighter pile and repeat for loop by setting goldbar = lighterPile (and reset button)
+
 
 
     # for gb in goldBars:
