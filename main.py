@@ -22,10 +22,17 @@ def main():
         resetBtn.click()    # make sure board is empty
 
         for i in range(0, len(goldBars)):
+            id = ""
             if i < halfway:
                 pile1.append(goldBars[i])
+                id = f"left_{i}"
             else:
                 pile2.append(goldBars[i])
+                id = f"right_{i}"
+            
+            # input values to weigh
+            inputSQR = driver.find_element(By.ID, id)
+            inputSQR.send_keys(str(i))
 
         # weigh pile1 and pile2
         # if piles are equal: set ans = extra and return
