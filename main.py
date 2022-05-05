@@ -12,37 +12,42 @@ def main():
     ans = None
 
     while ans == None:
+        extra = None
         if len(goldBars) % 2 != 0:
             extra = goldBars[len(goldBars)-1]
             goldBars.pop()
 
-        pile1 = []
-        pile2 = []
+        left = []
+        right = []
         halfway = int(len(goldBars) / 2)
-        resetBtn.click()    # make sure board is empty
+        resetBtn.click()    # make sure board is empty before every weighing
 
         for i in range(0, len(goldBars)):
             id = ""
             if i < halfway:
-                pile1.append(goldBars[i])
+                left.append(goldBars[i])
                 id = f"left_{i}"
             else:
-                pile2.append(goldBars[i])
+                right.append(goldBars[i])
                 id = f"right_{i}"
             
             # input values to weigh
             inputSQR = driver.find_element(By.ID, id)
             inputSQR.send_keys(str(i))
 
-        # weigh pile1 and pile2
-        # if piles are equal: set ans = extra and return
-        # else: take lighter pile and repeat for loop by setting goldbar = lighterPile (and reset button)
+        # weigh left and right piles
+        driver.find_element(By.ID, "weigh").click()
+        weighRes = driver.find_element(By.XPATH, "//div[@class='result']/button").text
 
+        # compare piles
+        if weighRes == "=":
+            ans = extra
+        elif weighRes == "<":
+            goldBars = left
+        else:
+            goldBars = right
 
-
-    # for gb in goldBars:
-    #     print(gb.text)
-    # print(len(goldBars))
+    print(ans)
     driver.close()
 
 main()
