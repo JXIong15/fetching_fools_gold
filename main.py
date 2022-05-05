@@ -42,7 +42,7 @@ def main():
         driver.find_element(By.ID, "weigh").click()
 
         # WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@class='game-info']/li")))
-        time.sleep( 2 ) # IDK why this works and the above don't
+        time.sleep( 3 ) # IDK why this works and the above don't
         res = driver.find_element(By.XPATH, "//div[@class='result']/button")
 
         # compare piles
@@ -66,8 +66,11 @@ def main():
     print(w)
 
     driver.find_element(By.ID, f"coin_{ans.text}").click()
-    print(driver.switch_to.alert.text)
-    # driver.close()
-    # driver.quit()
+    alert = driver.switch_to.alert
+    print(alert.text)
+    alert.accept()
+
+    driver.close()
+    driver.quit()
 
 main()
