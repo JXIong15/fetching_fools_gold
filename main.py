@@ -4,8 +4,8 @@ import time
 
 
 driver = webdriver.Chrome()
-# maybe add a env file?
 driver.get("http://sdetchallenge.fetchrewards.com/")
+
 
 def main():
     assert "React" in driver.title
@@ -42,7 +42,7 @@ def main():
         driver.find_element(By.ID, "weigh").click()
 
         # WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, "//div[@class='game-info']/li")))
-        time.sleep( 5 ) # IDK why this works and the above don't
+        time.sleep( 2 ) # IDK why this works and the above don't
         res = driver.find_element(By.XPATH, "//div[@class='result']/button")
 
         # compare piles
@@ -58,6 +58,14 @@ def main():
                 ans = right[0]
         
     print(ans.text)
+
+    weighings = driver.find_elements(By.ID, "//div[@class='game-info']/li")
+    w = []
+    for weighing in weighings:
+        w.append(weighing.text)
+    print(w)
+
+    driver.find_element(By.ID, f"coin_{ans.text}").click()
     # driver.close()
     # driver.quit()
 
