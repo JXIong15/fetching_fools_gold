@@ -60,13 +60,13 @@ def main():
     print(ans.text)
 
     weighings = driver.find_elements(By.XPATH, "//div[@class='game-info']/ol/li")
-    print("weighings: ", weighings)
     w = []
     for weighing in weighings:
         w.append(weighing.text)
     print(w)
 
     driver.find_element(By.ID, f"coin_{ans.text}").click()
+    print(driver.switch_to.alert.text)
     # driver.close()
     # driver.quit()
 
