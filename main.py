@@ -7,8 +7,36 @@ driver = webdriver.Chrome()
 driver.get("http://sdetchallenge.fetchrewards.com/")
 
 
+def main():
+    goldBars = driver.find_elements(By.XPATH, "//div[@class='coins']/button")
+    ans = find_fake(goldBars)
+    results(ans)
+    driver.close()
+    driver.quit()
+
+
+def find_fake(goldBars):
+    ans = None
+    while ans == None:
+        extra = None
+        left = []
+        right = []
+
+        if len(goldBars) % 2 != 0:
+            extra = goldBars[len(goldBars)-1]
+            goldBars.pop()
+
+        # make sure board is empty before every weighing
+        driver.find_element(By.XPATH, "//button[contains(text(),'Reset')]").click()
+        weigh_ins(goldBars, left, right)
+        time.sleep(1)   # wait for weigh-in results to process
+        goldBars, ans = compare(goldBars, left, right, extra, ans)
+
+    return ans
+
+
  # split bars in two equal piles for weighing
-def weighIns(goldBars, left, right):
+def weigh_ins(goldBars, left, right):
     halfway = int(len(goldBars) / 2)
     for i in range(0, len(goldBars)):
             id = ""
@@ -21,11 +49,10 @@ def weighIns(goldBars, left, right):
                 
             # input values to weigh
             driver.find_element(By.ID, id).send_keys(goldBars[i].text)
-        
     driver.find_element(By.ID, "weigh").click()
 
 
-# use weigh in results to determine what to do next
+# use weigh-in results to determine what to do next
 def compare(goldBars, left, right, extra, ans):
     res = driver.find_element(By.XPATH, "//div[@class='result']/button")
     # compare piles
@@ -58,28 +85,5 @@ def results(ans):
     print("Alert Text: ", alert.text)
     alert.accept()
 
-
-def main():
-    goldBars = driver.find_elements(By.XPATH, "//div[@class='coins']/button")
-    ans = None
-
-    while ans == None:
-        extra = None
-        left = []
-        right = []
-
-        if len(goldBars) % 2 != 0:
-            extra = goldBars[len(goldBars)-1]
-            goldBars.pop()
-
-        # make sure board is empty before every weighing
-        driver.find_element(By.XPATH, "//button[contains(text(),'Reset')]").click()
-        weighIns(goldBars, left, right)
-        time.sleep( 2 )
-        goldBars, ans = compare(goldBars, left, right, extra, ans)
-        
-    results(ans)
-    driver.close()
-    driver.quit()
 
 main()
