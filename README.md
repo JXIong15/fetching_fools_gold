@@ -5,8 +5,8 @@
 ## Table of Contents
 * [Description](#description)
 * [Installations](#installations)
-* [Functionality](#functionality)
 * [Commands](#commands)
+* [Functionality](#functionality)
 * [Technologies Used](#technologies-used)
 * [Demo](#demo)
 * [Future Ideas](#future-ideas)
@@ -35,12 +35,18 @@ A Selenium-Python based algorithm to find the fake gold bar in the minimum numbe
 * Clone *this* repo in *command line*: `git clone` and one of the links below
   * **HTTPS:** https://github.com/JXIong15/fetching_fools_gold.git
   * **SSH:** git@github.com:JXIong15/fetching_fools_gold.git
-* `cd` into the project and install in your command line:
+* `$ cd fetching_fools_gold` into the project and install in your command line: 
   * *python*: https://www.python.org/downloads/
   * *pip*: should automatically be installed with python above
   * *pipenv*: https://pipenv.pypa.io/en/latest/install/
     * run `pipenv install` to download provided packages to pipfile and project
-    * run `pipenv shell` to enter the virtual environment
+
+
+## Commands
+* Enter the virtual environment: `pipenv shell`
+* Next, run `python main.py` to view the results of the algorithm
+<p><img src="https://i.ibb.co/dfS01GG/Screen-Shot-2022-05-06-at-1-27-56-PM.png" width="100%"  stylealt="results after installations and running commands"/></p>
+<p align="center">(Results after installations and running commands)</p>
 
 
 ## Functionality
@@ -49,11 +55,6 @@ A Selenium-Python based algorithm to find the fake gold bar in the minimum numbe
 * Uses Selenium to interact with the webpage and make assertions
 * Mathematically, to calculate the fewest amount of weighings needed, a user would weigh an equal half of the gold over and over again until they are weighing one gold bar against one gold bar. Hence, the minimum number of weighings would be `log2(n)` where `n = number-of-gold-bars`, and we round *down*.
     * **Caveat:** In the case that the very first round of weighings are equal and the total number of gold bars is odd, then the extra gold bar that was not weighed is the fake one. Thus, the total number of weighings here would be less than `log2(n)`.
-
-
-## Commands
-* In the *virtual environment*, run:
-  * `python main.py` to view the results of the algorithm
 
 
 ## Technologies Used
