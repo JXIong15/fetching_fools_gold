@@ -1,7 +1,6 @@
-from lib2to3.pgen2.token import EQUAL
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import time
+import time, math
 
 
 driver = webdriver.Chrome()
@@ -11,7 +10,7 @@ driver.get("http://sdetchallenge.fetchrewards.com/")
 def main():
     goldBars = driver.find_elements(By.XPATH, "//div[@class='coins']/button")
     ans = find_fake(goldBars)
-    results(ans)
+    results(ans, goldBars)
     driver.close()
     driver.quit()
 
@@ -32,7 +31,7 @@ def find_fake(goldBars):
         weigh_ins(goldBars, left, right)
         time.sleep(1)   # wait for weigh-in result to process
         goldBars, ans = compare(goldBars, left, right, extra)
-
+        
     return ans
 
 
@@ -50,6 +49,7 @@ def weigh_ins(goldBars, left, right):
                 
         # input values to weigh
         driver.find_element(By.ID, id).send_keys(goldBars[i].text)
+
     driver.find_element(By.ID, "weigh").click()
 
 
@@ -68,27 +68,33 @@ def compare(goldBars, left, right, extra):
         goldBars = right
         if len(right) == 1:
             ans = right[0]
-    
+
     return goldBars, ans
 
 
 # prints results to console
-def results(ans):
+def results(ans, goldBars):
     print("Fake Gold Bar: ", f"#{ans.text}")
 
     weighings = driver.find_elements(By.XPATH, "//div[@class='game-info']/ol/li")
+    assert len(weighings) > 0
     w = []
     for weighing in weighings:
         w.append(weighing.text)
     print("Weighing Result(s): ", w)
     print("Number of Weighing(s): ", len(w))
+    assert len(w) == min_weighings(len(goldBars))
 
     driver.find_element(By.ID, f"coin_{ans.text}").click()
     alert = driver.switch_to.alert
     print("Results Message: ", alert.text)
     assert "Yay!" in alert.text
-    assert "Oops" in alert.text
     alert.accept()
+
+
+# calculates the minimum amount of weighings to find fake bar of gold
+def min_weighings(n):
+    return math.floor(math.log2(n))
 
 
 main()
