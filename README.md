@@ -78,6 +78,8 @@ A Selenium-Python based algorithm to find the fake gold bar in the minimum numbe
 ## Sources
 * ChromeDriver Installation Guide: https://blog.testproject.io/2019/07/16/installing-selenium-webdriver-using-python-chrome/
 * Python HTTP Requests: https://docs.python-requests.org/en/latest/
+* I install everything using Homebrew: https://brew.sh/
+    * ChromeDriver using Homebrew: https://formulae.brew.sh/cask/chromedriver
 
 
 ## License
