@@ -1,4 +1,4 @@
-# fetching_fools_gold
+# Fetching Fools Gold
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
@@ -17,7 +17,7 @@
 A Selenium-Python based algorithm to find the fake gold bar in the minimum number of weighings.
 * **GitHub:** https://github.com/JXIong15/fetching_fools_gold
 * **Tested Website:** http://sdetchallenge.fetchrewards.com/
-<p><img src="" width="100%"  stylealt="tested website page"/></p>
+<p><img src="https://i.ibb.co/6yyFzJW/Screen-Shot-2022-05-06-at-12-25-03-PM.png" width="100%"  stylealt="tested website page"/></p>
 <p align="center">(The SDET Challenge webpage to be tested using Selenium)</p>
 
 
@@ -27,8 +27,9 @@ A Selenium-Python based algorithm to find the fake gold bar in the minimum numbe
     * Next, download the matching version of ChromeDriver: https://sites.google.com/chromium.org/driver/
     * Lastly, add it to your system path
         * You can figure out your PATH by typing `echo $PATH` in your `command line`
-    * To make sure chromedriver is working, type `chromedriver` in your `command line`. You should receive the same message in the image below:
-<p><img src="" width="100%"  stylealt="successful chromedriver installation"/></p>
+    * To make sure chromedriver is working, type `chromedriver` in your `command line`. You should receive a similar message to the one in the image below.
+    * If you're getting an Apple error for chromedriver, `cd` to the directory where chromedriver is and run `xattr -d com.apple.quarantine chromedriver`
+<p><img src="https://i.ibb.co/mvmvcCt/Screen-Shot-2022-05-06-at-12-40-39-PM.png" width="100%"  stylealt="successful chromedriver installation"/></p>
 <p align="center">(Success ChromeDriver Installation Verification)</p>
 
 * Clone *this* repo in *command line*: `git clone` and one of the links below
@@ -43,55 +44,38 @@ A Selenium-Python based algorithm to find the fake gold bar in the minimum numbe
 
 
 ## Functionality
-* For the purpose of this project, the environmental variables are given in `.env.EXAMPLE`. 
-Delete the **.EXAMPLE** part to use the **.env** file
-* It is recommended that you create your own superuser to access the Django Admin: `python manage.py createsuperuser`
-* To start the app locally, run `python manage.py runserver` and go to `http://localhost:8000/admin`
-  * there is currently no Frontend, so you will just see the Django Admin panel with its built-in forms
-* Using **Postman** (or any similar application):
-  * GET *http://localhost:8000/balance/* : returns a list of the current payer balances
-  * GET *http://localhost:8000/payer/* : returns a list of the current payers
-  * GET *http://localhost:8000/transaction/* : returns a list of the transactions from oldest timestamp
-  * POST *http://localhost:8000/payer/* : data = `{'name'='NAME'}` will return the new payer's information
-  * POST *http://localhost:8000/transaction/* : data = `{'name'='NAME', 'points'=int, timestamp=time}` will add the 
-new points to the specified payer
-  * POST *http://localhost:8000/spend/* : data = `{'points'=int}` will return a receipt of which payer(s) spent points 
-and how many points each payer spent
-    * points are spent in order of oldest transaction timestamp
-  * DELETE *http://localhost:8000/payer/{payer_id}* : will delete the payer and all associated transactions to them
+* Connects to the webpage using ChromeDriver
+* Uses Python to create an algorithm for the least amount of weighings to find the fake gold bar
+* Uses Selenium to interact with the webpage and make assertions
+* Mathematically, to calculate the fewest amount of weighings needed, a user would weigh an equal half of the gold over and over again until they are weighing one gold bar against one gold bar. Hence, the minimum number of weighings would be `log2(n)` where `n = number-of-gold-bars`, and we round *down*.
+    * **Caveat:** In the case that the very first round of weighings are equal and the total number of gold bars is odd, then the extra gold bar that was not weighed is the fake one. Thus, the total number of weighings here would be less than `log2(n)`.
 
 
 ## Commands
 * In the *virtual environment*, run:
-  * Server: `python manage.py runserver`
-  * Tests: `python manage.py test`
-  * Webclient Requests: `python points/client.py`
+  * `python main.py` to view the results of the algorithm
 
 
 ## Technologies Used
-* **Django** and **Django REST Framework**
-* **Postman** to test API routes: https://www.postman.com/downloads/
-* **environ** for secret keys
-* **requests** for Python web client
+* Selenium
+* Python
+* ChromeDriver
 
 
 ## Results
-* **Webclient Results**:
-<p><img src="https://i.imgur.com/ht6eSnv.png" width="100%" height="100%" stylealt="webclient results"/></p>
+* **Found Fake Gold Alert Message**:
+<p><img src="https://i.ibb.co/PzGQ8fz/Screen-Shot-2022-05-06-at-1-08-25-PM.png" width="100%" height="100%" stylealt="found fake gold alert message"/></p>
 
-* **Test Results**:
-<p><img src="https://i.imgur.com/72YEB2F.png" width="100%" height="100%" stylealt="tests results"/></p>
+* **Found Non-Fake Gold Alert Message**:
+<p><img src="https://i.ibb.co/MsQzngj/Screen-Shot-2022-05-06-at-1-08-34-PM.png" width="100%" height="100%" stylealt="found non-fake gold alert message"/></p>
 
 
 ## Future Ideas
-* In *tests*, get `object.create()` to work so that the code efficiently runs
-  * right now it makes API calls to `post` new objects
-* Figure out how to connect Transaction and Payer models by Payer name rather than foreign key
-* Get Django forms and Django Admin to function properly when transactions are ran. Currently, calling the API routes is the only way transaction points are applied to payers.
+* I'd like to run the program on a larger set of gold bars
 
 
 ## Sources
-* Django Docs: https://docs.djangoproject.com/en/4.0/
+* ChromeDriver Installation Guide: https://blog.testproject.io/2019/07/16/installing-selenium-webdriver-using-python-chrome/
 * Python HTTP Requests: https://docs.python-requests.org/en/latest/
 
 
@@ -99,13 +83,3 @@ and how many points each payer spent
 Licensed under the [MIT License](LICENSE).
 
 <p align="center">© 2022 Jou Xiong</p>
-
-
-Download selebium
-Make sure to download chromedriver for your version of chrome
-download chromedriver (I used Homebrew) and add to PATH 
-can find PATH using "echo $PATH" in terminal
-check chromedriver works by running "chromedriver" in terminal
-if getting an Apple error for chromedriver, go to directory where chromedriver is and run "xattr -d com.apple.quarantine chromedriver"
-
-CD into directory of project and type python3 main.py

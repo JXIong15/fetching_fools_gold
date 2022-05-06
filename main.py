@@ -31,7 +31,7 @@ def find_fake(goldBars):
         weigh_ins(goldBars, left, right)
         time.sleep(1)   # wait for weigh-in result to process
         goldBars, ans = compare(goldBars, left, right, extra)
-        
+
     return ans
 
 
@@ -83,7 +83,7 @@ def results(ans, goldBars):
         w.append(weighing.text)
     print("Weighing Result(s): ", w)
     print("Number of Weighing(s): ", len(w))
-    assert len(w) == min_weighings(len(goldBars))
+    assert len(w) <= min_weighings(len(goldBars))
 
     driver.find_element(By.ID, f"coin_{ans.text}").click()
     alert = driver.switch_to.alert
