@@ -8,7 +8,7 @@
 * [Commands](#commands)
 * [Functionality](#functionality)
 * [Technologies Used](#technologies-used)
-* [Demo](#demo)
+* [Results](#results)
 * [Future Ideas](#future-ideas)
 * [Sources](#sources)
 
