@@ -17,8 +17,9 @@ def main():
 
 def find_fake(goldBars):
     ans = None
+    extra = None
+
     while ans == None:
-        extra = None
         left = []
         right = []
 
